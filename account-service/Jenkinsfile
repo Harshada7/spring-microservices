@@ -6,7 +6,7 @@ node {
     withMaven(maven:'maven') {
 
         stage('Checkout') {
-            git url: 'https://github.com/saurabh0010/sample-spring-microservices.git', CredentialsID: 'github', branch: 'master'
+            git url: 'https://github.com/Harshada7/spring-microservices.git', CredentialsID: 'github', branch: 'master'
         }
 
         stage('Build') {
@@ -16,6 +16,11 @@ node {
             print pom.version
             env.version = pom.version
         }
+     
+      stage('Initialize'){
+        def dockerHome = tool 'MyDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
 
         stage('Image') {
             dir ('account-service') {
